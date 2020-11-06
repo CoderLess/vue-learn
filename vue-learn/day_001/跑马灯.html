@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <input type="button" value="动起来" @click="lang">
+    <input type="button" value="停一下" @click="stop">
+    <p>{{msg}}</p>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello world~~~!',
+        intervalId: null
+      },
+      methods: {
+        lang() {
+          if (null != this.intervalId) return
+          this.intervalId = setInterval(() => {
+            var start = this.msg.substring(0, 1)
+            var end = this.msg.substring(1)
+            this.msg = end + start
+          }, 400)
+        },
+        stop() {
+          clearInterval(this.intervalId)
+          this.intervalId = null
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
