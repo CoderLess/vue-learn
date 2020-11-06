@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <!-- 1. 遍历数组 -->
+    <p v-for="item in list">{{item}}</p>
+    <!-- 2. 遍历对象数组 -->
+    <p v-for="(item,index) in user">用户的id:{{item.id}},姓名:{{item.name}},索引:{{index}}</p>
+    <!-- 3. 遍历对象的属性 -->
+    <p v-for="(value,key,index) in userObj">
+      属性名：{{key}} ---- 属性值: {{value}} ---- 索引: {{index}}
+    </p>
+    <!-- 4. 遍历数值 -->
+    <p v-for="i in 10">{{i}}</p>
+    <!-- 注意： 2.2 版本以后使用v-for遍历必须指定一下key -->
+    <!-- 如果不指定key的话，可能会造成选项混乱的问题 -->
+    <input type="text" v-model="id">
+    <input type="text" v-model="name">
+    <input type="button" value="添加" @click="add">
+    <p v-for="item in user" :key="item.id">
+      <input type="checkbox">{{item.name}}</input>
+    </p>
+  </div>
+
+  <script>
+   var vm = new Vue({
+    el: '#app',
+    data: {
+      list: [1,2,3,4,5,6],
+      user: [
+        {id:1,name:'zs1'},
+        {id:2,name:'zs2'},
+        {id:3,name:'zs3'},
+        {id:4,name:'zs4'},
+        {id:5,name:'zs5'},
+      ],
+      userObj: {id:1, name: 'tony'},
+      id: '',
+      name: ''
+    },
+    methods: {
+      add() {
+        this.user.unshift({id:this.id,name:this.name})
+      }
+    }
+   });
+  </script>
+</body>
+
+</html>

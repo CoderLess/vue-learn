@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+  <style>
+    .red{
+      color: red;
+    }
+    .thin{
+      font-weight: 200;
+    }
+    .italic{
+      font-style: italic;
+    }
+    .active{
+      letter-spacing: 0.5em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id ="app">
+    <!-- 1. 直接使用数组进行绑定，单引号不能丢失，如果单引号丢了，他会将red当做属性或方法 -->
+    <h1 :class="['red','thin']">这是一个很大的h1</h1>
+    <!-- 2. 使用三元表达式 -->
+    <h1 :class="[red?'red':'','thin']">这是一个很大的h1</h1>
+    <!-- 3. 使用对象 -->
+    <h1 :class="[{'red':red},'thin']">这是一个很大的h1</h1>
+    <!-- 4. 直接使用对象 -->
+    <h1 :class="{red:true, italic:true,thin:false,active:true}">这是一个很大的h1</h1>
+    <!-- 5. 直接使用对象（将对象抽取出来） -->
+    <h1 :class="object">这是一个很大的h1</h1>
+  </div>
+
+  <script>
+   var vm = new Vue({
+    el: '#app',
+    data: {
+      red:true,
+      object: {red:true, italic:true,thin:false,active:true}
+    },
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>
