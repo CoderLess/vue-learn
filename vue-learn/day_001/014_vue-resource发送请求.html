@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./js/vue.js"></script>
+  <!-- vue-resource 依赖于vue，所以注意引入js的顺序，需要先引入vue再引入vue-resource -->
+  <script src="./js/vue-resource.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script> -->
+</head>
+
+<body>
+  <div id="app">
+    <input type="button" value="get" @click="get">
+    <input type="button" value="post" @click="post">
+    <input type="button" value="jsonp" @click="jsonp">
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {},
+      methods: {
+        get() {
+          this.$http.get('http://8.131.95.28:8080/api/get').then((result) => {
+            console.log(result.body)
+          })
+        },
+        post() {
+          this.$http.post('http://8.131.95.28:8080/api/post', { name: 'test' }, { enulateHTTP: true, emulateJSON: true }).then((result) => {
+            console.log(result)
+          })
+        },
+        jsonp() {
+          this.$http.jsonp('http://8.131.95.28:8080/api/get').then((result) => {
+            console.log(result.body)
+          })
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
