@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <!-- 讲new出来的vue实例控制这个元素里面的所有内容，这里就是我们地MVVM（m：数据，v：html的结构，VM是一个调度者）中的V,即视图层 -->
+  <div id="app">
+    <p>{{msg}}</p>
+  </div>
+  <script>
+    // 创建一个Vue的实例
+    var vm = new Vue({
+      el: '#app',
+      // 这是mvvm中的m，即数据
+      data: {
+        msg: 'hello'
+      }
+    })
+  </script>
+</body>
+
+</html>

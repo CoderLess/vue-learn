@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 过滤器可以配置多个，根据配置的顺序依次执行 -->
+    <p>{{msg | msgFormatter('疯狂', '123') | test}}</p>
+  </div>
+  <div id="app2">
+    <!-- 过滤器可以配置多个，根据配置的顺序依次执行 -->
+    <p>{{msg2 | msgFormatter('疯狂', '123') | test}}</p>
+  </div>
+  <script>
+    // 全局过滤器的定义
+    // 全局过滤器就是所有的vm实例都可以共享
+    // 过滤器定义用在 1. 插值表达式  2. v-bind上
+    // 过滤器传参可以传递多个：第一个值为插值表达式中的值，后面的值为参数
+    Vue.filter('msgFormatter', function (msg, arg1, arg2) {
+      return msg.replace(/单纯/g, arg1 + arg2)
+    });
+    Vue.filter('test', function (msg) {
+      return msg + '123'
+    });
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '曾经我也是一个单纯的少年，单纯的我，傻傻的问，谁是这个世界上最单纯的少年'
+      },
+      methods: {}
+    });
+    var vm2 = new Vue({
+      el: '#app2',
+      data: {
+        msg2: 'vm实例2：曾经我也是一个单纯的少年，单纯的我，傻傻的问，谁是这个世界上最单纯的少年'
+      },
+      // 定义局部过滤器
+      // 过滤器的使用才用的是就近原则，优先使用局部过滤器，然后再使用全局过滤器
+      filters: {
+        msgFormatter: function (msg, arg1, arg2) {
+          return msg.replace(/单纯/g, arg1 + arg2) + '局部过滤器'
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

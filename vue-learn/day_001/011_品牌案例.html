@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +11,162 @@
 </head>
 
 <body>
-  <div id ="app">
-    
+  <div id="app">
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+      </div>
+      <div class="panel-body form-inline">
+        <label>Id: <input type="text" class="form-control" v-model="id"></label>
+        <!-- 按键修饰符 
+            @keyup：所有的键都会监听到
+            @keyup.enter: 监听点击回车事件
+            以下是vue中提供的可以直接使用的键
+            .enter
+            .tab
+            .delete (捕获“删除”和“退格”键)
+            .esc
+            .space
+            .up
+            .down
+            .left
+            .right
+           @keyup.f2:自定义全局按键修饰符：Vue.config.keyCodes.f2 = 113
+           @keyup.113:直接写键盘的码值也是可以用的
+         -->
+        <label>Name: <input type="text" class="form-control" v-model="name" @keyup.113="add"></label>
+        <input type="button" value="添加" class="btn btn-primary" @click="add">
+        <label>根据关键字搜索：<input type="text" class="form-control" v-model="keyword" v-focus v-color="'blue'"
+            v-fontweight="'900'" v-fontsize="'20px'"></label>
+      </div>
+    </div>
+    <!-- 表格 -->
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Ctime</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in search(keyword)" :key="item.id">
+          <td>{{item.id}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.ctime | dateFormat('')}}</td>
+          <td><a @click.prevent="del(item.id)">删除</a></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <script>
-   var vm = new Vue({
-    el: '#app',
-    data: {},
-    methods: {}
-   });
+    // 自定义指令 官方示例（https://cn.vuejs.org/v2/guide/custom-directive.html） 
+    // bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+    // inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+    // update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
+    Vue.directive('focus', {
+      inserted: function (el) {
+        el.focus()
+      }
+    })
+    Vue.directive('color', {
+      bind: function (el, binding) {
+        el.style.color = binding.value
+      }
+    })
+    // 自定义全局按键修饰符
+    Vue.config.keyCodes.f2 = 113
+    // 全局过滤器
+    Vue.filter('dateFormat', function (dateStr, formatStr = 'yyyy-mm-dd') {
+      var date = new Date(dateStr)
+      var year = date.getFullYear()
+      var month = (date.getMonth() + 1).toString().padStart(2, '0')
+      var day = date.getDate().toString().padStart(2, '0')
+
+      // 如果传入进来的参数是这个值，则转换到按日期的显示类型 
+      // 如果不是这个值，则统一按照时间类型进行处理
+      if (formatStr.toLowerCase() == 'yyyy-mm-dd') {
+        return `${year}-${month}-${day}`
+      } else {
+        var hour = date.getHours().toString().padStart(2, '0')
+        var minute = date.getMinutes().toString().padStart(2, '0')
+        var second = date.getSeconds().toString().padStart(2, '0')
+        return `${year}-${month}-${day} ${hour}:${minute}:${second}`
+      }
+    })
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        id: '',
+        name: '',
+        keyword: '',
+        list: [
+          { id: 1, name: '奔驰', ctime: new Date() },
+          { id: 2, name: '宝马', ctime: new Date() }
+        ]
+      },
+      methods: {
+        add() {
+          this.list.push({ id: this.id, name: this.name, ctime: new Date() })
+          // js 计算是从右到左，所以可以使用这样的赋值方式
+          this.id = this.name = ''
+        },
+        del(id) {
+          // 方法一：some函数，当内部返回true时，会立即终止当前的循环
+          // this.list.some((item) => {
+          //   if (item.id == id) {
+          //     this.list.splice(item.index, 1)
+          //     return true
+          //   }
+          // })
+          // 方法二：findIndex
+          var index = this.list.findIndex((item) => {
+            if (item.id == id) {
+              return true
+            }
+          })
+          this.list.splice(index, 1)
+        },
+        search(keyword) {
+          // 方法一：利用foreach进行遍历
+          // var newList = []
+          // this.list.forEach(element => {
+          //   if (element.name.indexOf(this.keyword) != -1) {
+          //     newList.push(element)
+          //   }
+          // });
+          // return newList
+          // 方法二：利用filter进行遍历
+          return this.list.filter((element) => {
+            if (element.name.includes(keyword)) {
+              return element
+            }
+          })
+
+          // 循环数据的方法
+          // forEach 没有办法终止
+          // some  可以利用return true终止循环
+          // filter 根据条件过滤出想要的结果
+          // findIndex 根据条件查询数组的索引
+        }
+      },
+      // 自定义局部指令
+      directives: {
+        'fontweight': {
+          bind: function (el, binding) {
+            el.style.fontWeight = binding.value
+          }
+        },
+        // 这种方式相当于把代码写到了 bind和update当中去
+        'fontsize': function (el, binding) {
+          el.style.fontSize = parseInt(binding.value) + 'px'
+        }
+      }
+    });
+
   </script>
 </body>
 

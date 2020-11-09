@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 这里如果是老版本的话会出现没有加载vuejs之前会显示这个占位符，为了解决这个占位符显示在界面上的问题
+      1. 使用 v-cloak 加css样式控制  
+      2. 使用 v-text 
+      区别： 插值表达式: 有闪烁问题，vue.js没有加载出来之前会显示出占位符
+            v-cloak: 加css可以解决闪烁问题
+            v-text: 会替换元素中的问题，插值表达式没有这个问题，没有闪烁问题
+            v-html: 会覆盖元素中的内容，也会转译html字符
+    -->
+    <p v-cloak>{{msg}}</p>
+    <p v-text="msg"></p>
+    <div>{{msg2}}</div>
+    <div v-text="msg2"></div>
+    <div v-html="msg2"></div>
+
+    <!-- v-bind：属性绑定 -->
+    <!-- v-bind: 是vue中提供的用于绑定属性的指令，他会将后面的值里面的表达式当做js表达式来进行解析 -->
+    <input value="v-bind使用" type="button" v-bind:title="title + '123'">
+    <!-- v-bind: 可以被简写为： -->
+    <input value="v-bind简写" type="button" :title="title + '123'">
+
+    <!-- v-on: 事件绑定机制 -->
+    <input value="v-on使用" type="button" v-on:click="show" />
+    <!-- 注意：v-on可以简写为@ -->
+    <input value="v-on简写" type="button" @click="show" />
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: 'hello world',
+        msg2: '<h1>哈哈，我是一个大大的h1，我大，我骄傲</h1>',
+        title: '这是一个title'
+
+      },
+      methods: {
+        show: function () {
+          alert("hello");
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
