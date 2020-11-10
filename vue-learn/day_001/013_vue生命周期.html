@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <input type="button" value="change" @click="msg='test'">
+    <p id="p">{{msg}}</p>
+  </div>
+
+  <script>
+   var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: 'hello world'
+    },
+    methods: {
+      show() {
+        return "show"
+      }
+    },
+    // 组件创建时的四个生命周期函数
+    // 在vue新创建的对象上，初始化了一些事件和生命周期函数，此时vue的实例的上data和method还不能被访问到
+    beforeCreate: function() {
+      // console.log('beforeCreate(属性):' + this.msg)
+      // console.log('beforeCreate(方法):'+this.show())
+    },
+    // data和methods中的数据已经被初始化完成，可以进行访问了
+    // 如果要访问data和methods最早要在created阶段
+    created: function () {
+      console.log('created(属性):' + this.msg)
+      console.log('created(方法):'+this.show())
+    },
+    // 此时vue已经在内存中创建出了节点只是还没有挂载到浏览器的页面上
+    beforeMount: function() {
+      console.log('beforeMount获取p中的值：'+document.getElementById('p').innerHTML)
+    },
+    // 此时vue已经将创建出来的节点替换到了界面，此时实例已经被创建完成了
+    // 如果需要操作dom节点，最早要在mounted阶段
+    mounted: function() {
+      console.log('mount获取p中的值：'+document.getElementById('p').innerHTML)
+    },
+    // 组件运行中的事件，生命周期函数
+    // 根据data的改变进行触发,此时界面上的数据还没有发生改变，但是data上挂载的数据已经发生了改变
+    beforeUpdate: function() {
+      console.log('beforeUpdate获取页面上p中的值：'+document.getElementById('p').innerHTML)
+      console.log('beforeUpdate获取data上p中的值：'+this.msg)
+    },
+    // 此时vue已经将内存中构造出来想虚拟的dom树挂载到了页面上，页面的上数据已经跟内存中的数据一致了
+    updated: function() {
+      console.log('beforeUpdate获取页面上p中的值：'+document.getElementById('p').innerHTML)
+      console.log('beforeUpdate获取data上p中的值：'+this.msg)
+    },
+    // 组件的销毁
+    // 此时vue实例已经进入到了销毁阶段，但是当前的 data,method,指令。。。。 都是还可以用的
+    beforeDestroy: function() {
+      console.log('beforeDestroy(属性):' + this.msg)
+      console.log('beforeDestroy(方法):'+this.show())
+    },
+    // 此时vue实例已经完全被销毁，组件中所有 数据，方法，指令，过滤器。。。都已经不可用了
+    destroyed: function() {
+      console.log('destroyed(属性):' + this.msg)
+    }
+   });
+  </script>
+</body>
+
+</html>
