@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#" @click.prevent="flag=true">注册</a>
+        <a href="#" @click.prevent="flag=false">登录</a>
+        <!-- 通过if else来控制控件的显示隐藏 -->
+        <register v-if="flag"></register>
+        <login v-else="flag"></login>
+    </div>
+    <template id="login">
+        <div>
+            <h3>登录组件</h3>
+        </div>
+    </template>
+    <template id="register">
+        <div>
+            <h3>注册组件</h3>
+        </div>
+    </template>
+    <script>
+        Vue.component('register', { template: '#register' })
+        Vue.component('login', { template: '#login' })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                flag: true
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

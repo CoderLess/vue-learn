@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <style>
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all .6s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#" @click.prevent="compName='login'">登录</a>
+        <a href="#" @click.prevent="compName='register'">注册</a>
+
+        <transition mode="out-in">
+            <component :is="compName"></component>
+        </transition>
+    </div>
+    <template id="register">
+        <div>
+            <h3>注册组件</h3>
+        </div>
+    </template>
+    <template id="login">
+        <div>
+            <h3>登录组件</h3>
+        </div>
+    </template>
+    <!-- 当前已经学过的vue标签 -->
+    <!-- template  component  transition  transitionGroup -->
+    <script>
+        Vue.component('register', { template: '#register' })
+        Vue.component('login', { template: '#login' })
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                compName: 'login'
+            },
+            methods: {}
+        });
+    </script>
+</body>
+
+</html>

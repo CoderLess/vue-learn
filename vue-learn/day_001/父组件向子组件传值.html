@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="change" @click="msg='change'">
+        <sub-com :parentmsg="msg"></sub-com>
+    </div>
+    <template id="subcom">
+        <div>
+            {{parentmsg}}
+        </div>
+    </template>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '123'
+            },
+            methods: {},
+            components: {
+                subCom: {
+                    template: '#subcom',
+                    // props中的属性都是只读的，data中的数据才是可读可写的
+                    props: ['parentmsg']
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

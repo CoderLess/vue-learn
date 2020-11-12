@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="js/vue.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
 </head>
 
 <body>
-  <div id ="app">
-    <!-- v-bind只能实现数据的单向绑定 -->
-    <!-- v-model可以实现输的双向绑定 -->
-    <!-- v-model只能用在表单元素上 -->
-    <h4>{{msg}}</h4>
-    <input type="text" v-model="msg" style="width: 100%;">
-  </div>
+    <div id="app">
+        <!-- v-bind只能实现数据的单向绑定：只能从M绑定到V ，页面的修改无法在同步到M上 -->
+        <!-- v-model可以实现输的双向绑定 -->
+        <!-- v-model只能用在表单元素上 -->
+        <h4>{{msg}}</h4>
+        <input type="text" v-model="msg" style="width: 100%;">
+    </div>
 
-  <script>
-   var vm = new Vue({
-    el: '#app',
-    data: {
-      msg: "hello world"
-    },
-    methods: {}
-   });
-  </script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: "hello world"
+            },
+            methods: {}
+        });
+    </script>
 </body>
 
 </html>
