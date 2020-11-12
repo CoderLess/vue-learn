@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <my-com></my-com>
+    <my-com1></my-com1>
+  </div>
+  <template id="temp">
+    <div>
+      <h1>这是一个通过template标签，在外部定义的结构方式</h1>
+      <h5>hahahah</h5>
+    </div>
+  </template> 
+
+  <template id="temp2">
+    <div>
+      <h1>这是一个通过私有的组件</h1>
+      <h5>222222</h5>
+    </div>
+  </template> 
+
+  <script>
+  // template必须有一个唯一的根元素，不能同时存在两个根元素
+   Vue.component('myCom', {template: '#temp'})
+
+   var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {},
+    filters: {},
+    directives: {},
+    components: {
+      myCom1: {
+        template: '#temp2'
+      }
+    },
+
+    beforeCreate() {},
+    created() {},
+    beforeMounted() {},
+    mounted() {},
+    beforeUpdate() {},
+    updated() {},
+    beforeDestory() {},
+    destoryed() {}
+   });
+  </script>
+</body>
+
+</html>

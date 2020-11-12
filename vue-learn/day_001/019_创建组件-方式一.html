@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <my-com></my-com>
+  </div>
+
+  <script>
+  //  var myCom = Vue.extend({
+  //    template: '<h1>这是一个Vue.extend 创建的组件</h1>'
+  //  })
+
+  // //  第一个参数是组件的名称，将来引用的时候就是以第一个参数的形式来引入  驼峰需要转换成-
+  //  Vue.component('myCom', myCom)
+  // 这种写法是上面的简写
+   Vue.component('myCom', Vue.extend({
+     template: '<h1>这是一个Vue.extend 创建的组件</h1>'
+   }))
+
+   var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>

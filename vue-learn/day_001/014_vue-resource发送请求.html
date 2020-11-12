@@ -20,23 +20,22 @@
   </div>
 
   <script>
+    // 设置全局的基本路径
+    Vue.http.options.root = 'http://8.131.95.28:8080/';
+    // 开启全局的以表单形式提交请求的配置  application/x-www-form-urlencoded
+    // Vue.http.options.emulateJSON = true;
     var vm = new Vue({
       el: '#app',
       data: {},
       methods: {
         get() {
-          this.$http.get('http://8.131.95.28:8080/api/get').then((result) => {
+          this.$http.get('api/get').then((result) => {
             console.log(result.body)
           })
         },
         post() {
-          this.$http.post('http://8.131.95.28:8080/api/post', { name: 'test' }, { enulateHTTP: true, emulateJSON: true }).then((result) => {
+          this.$http.post('api/post', { name: 'test' }, { enulateHTTP: true, emulateJSON: true }).then((result) => {
             console.log(result)
-          })
-        },
-        jsonp() {
-          this.$http.jsonp('http://8.131.95.28:8080/api/get').then((result) => {
-            console.log(result.body)
           })
         }
       }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+  <link rel="stylesheet" href="css/animate.css">
+</head>
+
+<body>
+  <div id ="app">
+    <input type="button" value="显示/隐藏" @click="show=!show">
+    <!-- 使用第三方的animate类库 -->
+    <!-- 使用方法一 -->
+    <!-- <transition enter-active-class="animate bounceIn" leave-active-class="animate bounceOut">
+      <h3 v-if="show">hello </h3>
+    </transition> -->
+
+    <!-- 使用方法二 -->
+    <!-- <transition enter-active-class="animate__bounceIn" leave-active-class="animate__bounceOut">
+      <h3 v-if="show">hello </h3>
+    </transition>     -->
+
+    <!-- 统一控制，设置动画时长 -->
+    <!-- <transition enter-active-class="animate__bounceIn" leave-active-class="animate__bounceOut" :duration="200">
+      <h3 v-if="show">hello </h3>
+    </transition>  -->
+    <!-- 分别控制动画时长    -->
+    <transition enter-active-class="animate__bounceIn" leave-active-class="animate__bounceOut" :duration="{enter:200, leave:400}">
+      <h3 v-if="show">hello </h3>
+    </transition> 
+  </div>
+
+  <script>
+   var vm = new Vue({
+    el: '#app',
+    data: {
+      show: false
+    },
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>
