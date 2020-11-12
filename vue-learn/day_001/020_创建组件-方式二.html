@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <my-com></my-com>
+  </div>
+
+  <script>
+  // template必须有一个唯一的根元素，不能同时存在两个根元素
+   Vue.component('myCom', {
+     template: '<div><h1>这是一个Vue.extend 创建的组件</h1><span>123</span></div>'
+   })
+
+   var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>

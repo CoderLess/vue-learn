@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+  <style>
+    .v-enter,
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+    .v-leave-active,
+    .v-enter-active {
+      /* 属性1：针对哪个属性进行变化  属性2：动画持续的时间  属性3：动画的效果 */
+      transition: all .8s ease; 
+    }
+
+    .my-enter,
+    .my-leave-to {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    .my-leave-active,
+    .my-enter-active {
+      /* 属性1：针对哪个属性进行变化  属性2：动画持续的时间  属性3：动画的效果 */
+      transition: all .8s ease; 
+    }
+  </style>
+</head>
+
+<body>
+  <div id ="app">
+    <!-- transition 是vue官方提供的标签 ，默认使用v-前缀的动画样式：对应v-的六个状态 https://cn.vuejs.org/v2/guide/transitions.html#%E6%A6%82%E8%BF%B0-->
+    <input type="button" value="显示/隐藏" @click="show=!show">
+    <!-- 1. 使用动画类的标签，必须被包裹在transition组件内 -->
+    <transition>
+      <h3 v-if="show">hello </h3>
+    </transition>
+
+    <hr>
+
+    <!-- 自定义样式前缀 -->
+    <input type="button" value="显示/隐藏" @click="show2=!show2">
+    <!-- 再transition上指定name属性用来区分不同组之间的动画，这个动画的前缀就改为my- -->
+    <transition name="my">
+      <h3 v-if="show2">hello </h3>
+    </transition>
+  </div>
+
+  <script>
+   var vm = new Vue({
+    el: '#app',
+    data: {
+      show: false,
+      show2: false
+    },
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>

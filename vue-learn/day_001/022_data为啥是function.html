@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="js/vue.js"></script>
+</head>
+
+<body>
+  <div id ="app">
+    <my-comp></my-comp>
+    <hr>
+    <my-comp></my-comp>
+    <hr>
+    <my-comp></my-comp>
+  </div>
+
+  <template id="tmp">
+    <div>
+      <input type="button" value="+1" @click="increment">
+      <p>{{count}}</p>
+    </div>
+  </template>
+
+
+  <script>
+    // var obj= {count:0}
+  Vue.component('myComp',{
+    template: '#tmp',
+    data: function() {
+      // return obj
+      // 为了保证不让所有的实例公用一个对象，改为function是为了每个对象都是对应一个实例的
+      return {count:0}
+    },
+    methods: {
+      increment() {
+        this.count++
+      }
+    }
+  })
+   var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {}
+   });
+  </script>
+</body>
+
+</html>
