@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="firstname">+
+        <input type="text" v-model="lastname">=
+        <input type="text" v-model="fullname">
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: '',
+                fullname: ''
+            },
+            methods: {},
+            watch: {
+                // 这里接受的两个参数分别是 变化之前的值 和变化之后的值
+                'firstname': function (newval, oldval) {
+                    console.log('oldval:' + oldval + ',newval:' + newval)
+                    this.fullname = newval + this.lastname
+                },
+                'lastname': function (newval, oldval) {
+                    this.fullname = this.firstname + newval
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

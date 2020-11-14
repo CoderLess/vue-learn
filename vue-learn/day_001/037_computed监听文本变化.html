@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model='firstname'>+
+        <input type="text" v-model='lastname'>=
+        <input type="text" v-model='fullname'>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: ''
+            },
+            methods: {},
+            computed: {
+                // 这也是一个数据的属性，可以当做data的上一个属性来使用，但是这个属性不能在data中再次定义了，否则程序会报错
+                // 只要计算属性所涉及的任何一个值发生了变化，都会重新计算属性重新求值
+                // 计算属性变动后只会进行一次求值，并不会以为多个地方使用而进行多次求值
+                'fullname': function () {
+                    return this.firstname + this.lastname
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

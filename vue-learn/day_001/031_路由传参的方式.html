@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 方式一：通过路径参数名的形式来传递参数 -->
+        <router-link to="/login?id=1">登录</router-link>
+        <!-- 方式二： 通过占位符的方式来解析参数 -->
+        <router-link to="/register/12">注册</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script>
+        var login = {
+            template: '<h1>登入组件---{{$route.query.id}}</h1>', created() {
+                console.log(this.$route.query.id)
+            }
+        }
+        var register = {
+            template: '<h1>注册组件---{{$route.params.id}}</h1>', created() {
+                console.log(this.$route.params.id)
+            }
+        }
+
+        var routes = [
+            { path: '/login', component: login },
+            // 方式二，需要路由path上定义好占位符的标记
+            { path: '/register/:id', component: register }
+        ]
+        var router = new VueRouter({
+            routes
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

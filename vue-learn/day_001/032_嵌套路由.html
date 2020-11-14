@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to='/account'>account</router-link>
+        <router-view></router-view>
+    </div>
+
+    <template id="login">
+        <div>
+            <h3>登入组件</h3>
+        </div>
+    </template>
+
+    <template id="register">
+        <div>
+            <h3>注册组件</h3>
+        </div>
+    </template>
+
+    <template id="account">
+        <div>
+            <h1>account组件</h1>
+            <router-link to="/login">登入</router-link>
+            <router-link to="/account/register">注册</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+
+    <script>
+        var account = { template: '#account' }
+        var login = { template: '#login' }
+        var register = { template: '#register' }
+        var routes = [
+            {
+                path: '/account', component: account, children: [
+                    // 这里加'/'和不加会产生不一样的效果
+                    { path: '/login', component: login },
+                    // 使用这种方式更容易理解，这个路由可以体现出路由之间的嵌套关系
+                    { path: 'register', component: register }
+                ]
+            }
+        ]
+        var router = new VueRouter({
+            routes
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        });
+    </script>
+</body>
+
+</html>

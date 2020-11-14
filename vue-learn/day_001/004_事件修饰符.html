@@ -1,58 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <script src="js/vue.js"></script>
-  <style>
-    #div1{
-      height: 100px;
-      background-color:cyan;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <style>
+        #div1 {
+            height: 100px;
+            background-color: cyan;
+        }
+    </style>
 </head>
 
 <body>
-  <div id ="app">
-    <!-- 事件触发默认为冒泡机制，内层的事件会向外一层一层触发 -->
-    <!-- .stop修饰符会阻止冒泡 -->
-    <div id="div1" @click="divClick">
-      <input type="button" value="stop" @click.stop="btnClick">
+    <div id="app">
+        <!-- 事件触发默认为冒泡机制，内层的事件会向外一层一层触发 -->
+        <!-- .stop修饰符会阻止冒泡 -->
+        <div id="div1" @click="divClick">
+            <input type="button" value="stop" @click.stop="btnClick">
+        </div>
+        <!-- .prevent修饰符用来阻止默认行为 -->
+        <a href="http://www.baidu.com" @click.prevent="aClick">有问题找百度</a>
+        <!-- .capture修饰符实现捕获触发事件:先触发外层容器的事件，再触发内侧的触发事件 -->
+        <div id="div1" @click.capture="divClick">
+            <input type="button" value="capture" @click="btnClick">
+        </div>
+        <!-- .self修饰符只有点击自己才会触发事件：只会自己身上冒泡机制，不会阻止别人的冒泡行为 -->
+        <div id="div1" @click.self="divClick">
+            <input type="button" value="self" @click="btnClick">
+        </div>
+        <!-- .onece只触发一次处理函数 -->
+        <!-- 修饰符是可以串联的 -->
+        <a href="http://www.baidu.com" @click.prevent.once="aClick">有问题找百度</a>
     </div>
-    <!-- .prevent修饰符用来阻止默认行为 -->
-    <a href="http://www.baidu.com" @click.prevent="aClick">有问题找百度</a>
-    <!-- .capture修饰符实现捕获触发事件:先触发外层容器的时间，再触发内侧的触发事件 -->
-    <div id="div1" @click.capture="divClick">
-      <input type="button" value="capture" @click="btnClick">
-    </div>
-    <!-- .self修饰符只有点击自己才会触发事件：只会自己身上冒泡机制，不会阻止别人的冒泡行为 -->
-    <div id="div1" @click.self="divClick">
-      <input type="button" value="self" @click="btnClick">
-    </div>
-    <!-- .onece只触发一次处理函数 -->
-    <!-- 修饰符是可以串联的 -->
-    <a href="http://www.baidu.com" @click.prevent.once="aClick">有问题找百度</a>
-  </div>
 
-  <script>
-   var vm = new Vue({
-    el: '#app',
-    data: {},
-    methods: {
-      btnClick() {
-        console.log("btn click")
-      },
-      divClick() {
-        console.log("div click")
-      },
-      aClick() {
-        console.log("a click")
-      }
-    }
-   });
-  </script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                btnClick() {
+                    console.log("btn click")
+                },
+                divClick() {
+                    console.log("div click")
+                },
+                aClick() {
+                    console.log("a click")
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>

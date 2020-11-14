@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./js/vue.js"></script>
+    <script src="js/vue-router.js"></script>
+    <style>
+        .router-link-active,
+        .myactive {
+            font-size: 20px;
+            font-weight: 800;
+            font-style: italic;
+            color: red;
+        }
+
+        /* 把动画的这两组样式添加上 */
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(150px);
+        }
+
+        .v-enter-to,
+        .v-leave-to {
+            transition: all .6s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <a href="#/login">登入</a>
+        <a href="#/register">注册</a> -->
+
+        <!-- router-link是vue-router提供的跳转路由的标签  默认router-link渲染为a标签， 可以通过tag标签改变router-link渲染出来的标签 -->
+        <router-link to="/login" tag="span">登入</router-link>
+        <router-link to="/register">注册</router-link>
+        <!-- 给路由添加动画 -->
+        <transition mode="out-in">
+            <!-- router-view是vue-router提供的显示路由的标签 -->
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <template id="login">
+        <div>
+            <h3>登入组件</h3>
+        </div>
+    </template>
+
+    <template id="register">
+        <div>
+            <h3>注册组件</h3>
+        </div>
+    </template>
+    <script>
+        // 1.定义路由组件
+        var login = { template: '#login' }
+        var register = { template: '#register' }
+        // 2. 创建路由对象
+        var router = new VueRouter({
+            // 3. 定义路由规则
+            routes: [
+                { path: '/', redirect: '/login' },
+                { path: '/login', component: login },
+                { path: '/register', component: register }
+            ],
+            linkActiveClass: 'myactive'
+        })
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            // 4. 挂在路由到vue对象
+            router // (缩写) 相当于 router: router
+        });
+    </script>
+</body>
+
+</html>
