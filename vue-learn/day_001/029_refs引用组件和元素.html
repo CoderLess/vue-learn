@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h3 ref="h3">这是一个h3</h3>
+        <input type="button" value="获取元素中的数据" @click="getText">
+        <mycomp ref="mycomp"></mycomp>
+        <input type="button" value="从子组件中获取数据" @click="getTextFromSubComp">
+    </div>
+
+    <template id="temp">
+        <div>
+            <h3>这是一个子组件</h3>
+            <span>{{name}}</span>
+        </div>
+    </template>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                getText() {
+                    console.log(this.$refs.h3.innerText)
+                },
+                getTextFromSubComp() {
+                    console.log(this.$refs.mycomp.name)
+                }
+            },
+            components: {
+                mycomp: {
+                    template: '#temp',
+                    data() {
+                        return {
+                            name: '子组件的name数据'
+                        }
+                    }
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

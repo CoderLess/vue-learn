@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 这里绑定的值用来调用父组件的方法 -->
+        <comp @func="show"></comp>
+    </div>
+    <template id="tmp">
+        <div>
+            <p>子组件</p>
+            <input type="button" value="点击调用父组件中的方法" @click="subclick">
+        </div>
+    </template>
+    <script>
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                show(data) {
+                    console.log("父组件show方法被调用" + data)
+                }
+            },
+            components: {
+                comp: {
+                    template: '#tmp',
+                    methods: {
+                        subclick() {
+                            // $emit 会触发调用父组件的方法，并后面的参数中进行传值
+                            this.$emit("func", 123)
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

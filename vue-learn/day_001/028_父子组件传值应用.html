@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/vue.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <div id="app">
+        <mycomp @func="flush"></mycomp>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for="item in list" :key="item.id">
+                <span class="badge">{{item.name}}</span>
+                {{item.content}}
+            </li>
+        </ul>
+
+
+
+    </div>
+
+    <template id="tmp">
+
+        <div class="form-inline">
+
+
+            <div class="form-group">
+
+                <label>name</label>
+                <input type="text" class="form-control" v-model="name">
+            </div>
+
+            <div class="form-group">
+                <label>content</label>
+                <input type="text" class="form-control" v-model="content">
+            </div>
+
+            <button type="button" class="btn btn-primary" @click="add">添加</button>
+        </div>
+
+    </template>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: Date.now(), name: '李白', content: '天生我才必有用' },
+                    { id: Date.now() + 1, name: '李白1', content: '天生我才必有用1' },
+                    { id: Date.now() + 2, name: '李白2', content: '天生我才必有用2' },
+                    { id: Date.now() + 3, name: '李白3', content: '天生我才必有用3' }
+                ]
+            },
+            methods: {
+                flush() {
+                    this.list = JSON.parse(localStorage.getItem('list'))
+                }
+            },
+            created() {
+                this.flush()
+            },
+            components: {
+                mycomp: {
+                    template: '#tmp',
+                    data() {
+                        return {
+                            name: '',
+                            content: ''
+                        }
+                    },
+                    methods: {
+                        add() {
+                            // 将数据存储到localstorage中
+                            var list = JSON.parse(localStorage.getItem('list') || '[]')
+                            list.unshift({ id: Date.now(), name: this.name, content: this.content })
+                            localStorage.setItem('list', JSON.stringify(list))
+                            this.name = this.content = ''
+                            // 调用父组件的函数重新拉去列表
+                            this.$emit('func')
+                        }
+                    }
+
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
